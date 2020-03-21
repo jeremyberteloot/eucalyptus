@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import Colors from '../assets/Colors';
 import PlantListItem from './PlantListItem';
 
 const PlantList = () => {
@@ -87,7 +86,8 @@ export default PlantList;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingVertical: 15
   },
   row: {
     flex: 1,

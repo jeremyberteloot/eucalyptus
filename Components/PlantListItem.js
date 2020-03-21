@@ -3,8 +3,13 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import Colors from '../assets/Colors';
 
 const PlantListItem = ({ plant }) => {
+
+  const isOdd = () => {
+    return plant.key % 2 ? styles.oddCard : {};
+  }
+
   return (
-    <View style={ styles.wrapper }>
+    <View style={{ ...styles.wrapper, ...isOdd() }}>
       <View style={ styles.innerWrapper }>
         <Image
           style={styles.backgroundImage}
@@ -22,8 +27,14 @@ export default PlantListItem;
 const styles = StyleSheet.create({
   wrapper: {
     width: '50%',
-    height: 400,
-    paddingHorizontal: 20
+    height: 300,
+    paddingLeft: 10,
+    paddingRight: 20,
+    paddingVertical: 5
+  },
+  oddCard: {
+    paddingLeft: 20,
+    paddingRight: 10
   },
   innerWrapper: {
     backgroundColor: Colors.neutral100,
