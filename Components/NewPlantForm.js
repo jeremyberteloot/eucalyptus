@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, SafeAreaView, View } from 'react-native';
 
 const NewPlantForm = () => {
   return (
-    <SafeAreaView style={ styles.wrapper }>
+    <SafeAreaView>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>Son petit nom</Text>
         <TextInput
@@ -34,14 +34,7 @@ const NewPlantForm = () => {
   )
 }
 
-export default NewPlantForm
-
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 20
-  },
   inputWrapper: {
     marginVertical: 5
   },
@@ -57,3 +50,5 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 })
+
+export default NewPlantForm

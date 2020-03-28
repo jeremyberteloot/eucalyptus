@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView, ImageBackground, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, View, SafeAreaView, ImageBackground, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import Colors from '../assets/Colors';
 
 import NewPlantForm from '../Components/NewPlantForm';
@@ -13,28 +13,39 @@ const NewPlantScreen = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior="padding">
-      <View style={ styles.wrapper }>
-        <ImageBackground
-          style={ styles.topImage }
-          source={require('../assets/images/plant1.jpg')}
-        >
-          <SafeAreaView>
-            <View style={styles.header}>
-              <IconButton
-                icon="ios-arrow-back"
-                onPress={() => handleBackPress()} />
-              <IconButton
-                icon="ios-camera"
-                color={Colors.neutral100}
-                styleOverride={{ backgroundColor: Colors.brand }} />
-            </View>
-          </SafeAreaView>
-        </ImageBackground>
-        <NewPlantForm />
-        <NewPlantSaveButton />
-      </View>
+      behavior="padding"
+      style={styles.keyboardAvoidingWrapper}
+    >
+      <TouchableWithoutFeedback
+        onPress={Keyboard.dismiss}
+        accessible={false}
+      >
+        <View style={styles.wrapper}>
+          <ImageBackground
+            style={styles.topImage}
+            source={require('../assets/images/plant1.jpg')}
+          >
+            <SafeAreaView>
+              <View style={styles.header}>
+                <IconButton
+                  icon="ios-arrow-back"
+                  onPress={() => handleBackPress()}
+                />
+                <IconButton
+                  icon="ios-camera"
+                  color={Colors.neutral100}
+                  styleOverride={{ backgroundColor: Colors.brand }}
+                  onPress={() => navigation.navigate('NewPlantCamera')}
+                />
+              </View>
+            </SafeAreaView>
+          </ImageBackground>
+          <View style={styles.formWrapper}>
+            <NewPlantForm />
+          </View>
+          <NewPlantSaveButton />
+        </View>
+      </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   )
 }
@@ -42,13 +53,22 @@ const NewPlantScreen = ({ navigation }) => {
 export default NewPlantScreen
 
 const styles = StyleSheet.create({
+  keyboardAvoidingWrapper: {
+    flex: 1
+  },
   wrapper: {
     flex: 1,
     backgroundColor: Colors.neutral100
   },
   topImage: {
     alignSelf: 'stretch',
-    height: 450
+    flexGrow: 1,
+    flexShrink: 3
+  },
+  formWrapper: {
+    flexGrow: 1,
+    flexShrink: 0,
+    padding: 15
   },
   header: {
     flexDirection: 'row',

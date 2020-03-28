@@ -6,6 +6,7 @@ import { AppLoading } from 'expo';
 
 import HomeScreen from './Screens/HomeScreen';
 import NewPlantScreen from './Screens/NewPlantScreen';
+import NewPlantCameraScreen from './Screens/NewPlantCameraScreen';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,10 @@ export default function App() {
           name="NewPlant"
           component={NewPlantScreen}
           options={{ title: 'Create a new plant', headerShown: false }} />
+        <Stack.Screen
+          name="NewPlantCamera"
+          component={NewPlantCameraScreen}
+          options={{ title: 'Take a picture', headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

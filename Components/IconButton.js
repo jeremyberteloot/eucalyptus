@@ -3,13 +3,13 @@ import { StyleSheet, TouchableWithoutFeedback, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../assets/Colors';
 
-const BackButton = ({ icon, color, styleOverride, onPress }) => {
+const BackButton = ({ icon, iconSize, color, styleOverride, onPress }) => {
   return (
     <TouchableWithoutFeedback onPress={() => onPress()}>
       <View style={{ ...styles.default, ...styleOverride }}>
         <Ionicons
           name={icon}
-          size={22}
+          size={iconSize || 22}
           color={color || Colors.neutral700} />
       </View>
     </TouchableWithoutFeedback>
