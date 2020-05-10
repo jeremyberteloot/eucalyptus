@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { Camera } from 'expo-camera';
 import Colors from '../assets/Colors';
 import { useCamera } from 'react-native-camera-hooks';
@@ -8,8 +8,9 @@ import IconButton from '../Components/IconButton';
 
 const NewPlantCameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const [{ cameraRef, type }, { toggleFacing, recordVideo }] = useCamera();
+  const [cameraType, setCameraType] = useState(false);
+  const [flashEnabled, setFlashEnabled] = useState(true);
+  const [{ cameraRef, type }, { toggleFacing, toggleFlash, takePicture, pausePreview }] = useCamera();
 
   useEffect(() => {
     (async () => {
@@ -26,19 +27,31 @@ const NewPlantCameraScreen = ({ navigation }) => {
     return <Text>Pas d'accès à la caméra</Text>;
   }
 
-  const setCamera = () => {
-    setType(type === Camera.Constants.Type.back
-      ? Camera.Constants.Type.front
-      : Camera.Constants.Type.back)
+  const handleCameraChangeType = () => {
+    setCameraType(!cameraType);
+    toggleFacing(cameraType);
+    // setCameraType(cameraType === Camera.Constants.Type.back
+    //   ? Camera.Constants.Type.front
+    //   : Camera.Constants.Type.back)
   };
 
-  const takePicture = async () => {
-    console.log('TAKE PICTURE');
-    const available = await cameraRef.isAvailableAsync();
-    if (!available) return;
-    const picture = await cameraRef.takePictureAsync();
+  const handleUseFlash = () => {
+    setFlashEnabled(!flashEnabled);
+    toggleFlash(flashEnabled);
+  };
 
+  const handleTakePicture = async () => {
+    console.log('TAKE PICTURE');
+    // const available = await takePicture();
+    // if (!available) return;
+    const picture = await takePicture();
+    // handlePausePreview();
     console.log(picture);
+  };
+
+  const handlePausePreview = async () => {
+    const preview = await pausePreview();
+    console.log(preview);
   };
 
   const handleBackPress = () => {
@@ -70,7 +83,7 @@ const NewPlantCameraScreen = ({ navigation }) => {
                 width: 60,
                 borderRadius: 45
               }}
-              onPress={() => setCamera()}
+              onPress={() => handleUseFlash()}
             />
             <IconButton
               icon="ios-camera"
@@ -82,7 +95,7 @@ const NewPlantCameraScreen = ({ navigation }) => {
                 width: 90,
                 borderRadius: 45
               }}
-              onPress={() => takePicture()}
+              onPress={() => handleTakePicture()}
             />
             <IconButton
               icon="ios-swap"
@@ -94,7 +107,7 @@ const NewPlantCameraScreen = ({ navigation }) => {
                 width: 60,
                 borderRadius: 45
               }}
-              onPress={() => setCamera()}
+              onPress={() => handleCameraChangeType()}
             />
           </View>
         </SafeAreaView>
